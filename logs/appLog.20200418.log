@@ -1,0 +1,6 @@
+{"file":"D:/Golang-program/datalot/base/base.go:56","func":"datalot/base.Init","level":"info","msg":"读取 Mysql 配置成功!","time":"2020-04-18 19:52:03"}
+{"file":"D:/Golang-program/datalot/base/base.go:84","func":"datalot/base.Init","level":"info","msg":"数据库连接成功!","time":"2020-04-18 19:52:03"}
+{"file":"D:/Golang-program/datalot/base/base.go:90","func":"datalot/base.Init","level":"info","msg":"读取地图资源配置成功!","time":"2020-04-18 19:52:03"}
+{"file":"D:/Golang-program/datalot/base/base.go:56","func":"datalot/base.Init","level":"info","msg":"读取 Mysql 配置成功!","time":"2020-04-18 19:52:38"}
+{"file":"D:/Golang-program/datalot/base/base.go:84","func":"datalot/base.Init","level":"info","msg":"数据库连接成功!","time":"2020-04-18 19:52:38"}
+{"file":"D:/Golang-program/datalot/base/base.go:90","func":"datalot/base.Init","level":"info","msg":"读取地图资源配置成功!","time":"2020-04-18 19:52:38"}

@@ -1,0 +1,21 @@
+app:
+  mysql:
+    user: data_lot
+    password: Nk1VO9PnHlRi3N8WUVjMRg==
+    host: 127.0.0.1:3306
+    db: data_lot
+  log:
+    log_path: logs
+    log_file: appLog
+  map:
+    #    b447c1149dbcfcda3f5b9bff2ee3caa6  高德地图
+    key: b447c1149dbcfcda3f5b9bff2ee3caa6
+    service_url: https://tsapi.amap.com/v1/track/service/add
+    terminal_url: https://tsapi.amap.com/v1/track/terminal/add
+    track_utl: https://tsapi.amap.com/v1/track/trace/add
+    search_url: https://tsapi.amap.com/v1/track/terminal/trsearch
+  # map:
+  #   key: CHLQNMGv6QLfiBqF6dkS43lVGaF5SL2I   # 百度地图
+  #   service_id: 19405059
+  #   entity_url: http://yingyan.baidu.com/api/v3/entity/add     # POST
+  #   track_utl: http://yingyan.baidu.com/api/v3/track/gettrack  # GET
