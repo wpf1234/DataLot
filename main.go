@@ -33,6 +33,7 @@ func main() {
 	noAuth := router.Group("/v1/lot")
 	noAuth.POST("/login", g.Login)
 	noAuth.POST("/register", g.Register)
+	//noAuth.DELETE("/friend",g.DelFriend)
 
 	auth := router.Group("/v1/lot/auth")
 	auth.Use(middleware.JWTAuth())
@@ -44,6 +45,9 @@ func main() {
 		auth.POST("/dynamic", g.Release)      // 发表动态
 		auth.POST("/dynamic/comm", g.Comment) // 评论动态
 		auth.POST("/dynamic/reply", g.Reply)  // 答复评论
+
+		auth.GET("/friend", g.AddFriend)    // 添加好友
+		auth.DELETE("/friend", g.DelFriend) // 删除好友
 	}
 
 	// 注册 handler
