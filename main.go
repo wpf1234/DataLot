@@ -22,7 +22,7 @@ func main() {
 	}
 
 	base.Init()
-	handler.CreateService()
+	//handler.CreateService()
 	// 全局设置环境，debug 为开发环境，线上环境为 gin.ReleaseMode
 	gin.SetMode(gin.ReleaseMode)
 	// 创建 Restful handler
@@ -48,6 +48,8 @@ func main() {
 
 		auth.GET("/friend", g.AddFriend)    // 添加好友
 		auth.DELETE("/friend", g.DelFriend) // 删除好友
+
+		auth.GET("/track", g.GetTrack) // 获取轨迹
 	}
 
 	// 注册 handler

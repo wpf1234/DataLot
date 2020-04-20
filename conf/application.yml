@@ -9,13 +9,14 @@ app:
     log_file: appLog
   map:
     #    b447c1149dbcfcda3f5b9bff2ee3caa6  高德地图
-    key: b447c1149dbcfcda3f5b9bff2ee3caa6
-    service_url: https://tsapi.amap.com/v1/track/service/add
-    terminal_url: https://tsapi.amap.com/v1/track/terminal/add
-    track_utl: https://tsapi.amap.com/v1/track/trace/add
-    search_url: https://tsapi.amap.com/v1/track/terminal/trsearch
+#    key: b447c1149dbcfcda3f5b9bff2ee3caa6
+#    service_url: https://tsapi.amap.com/v1/track/service/add
+#    terminal_url: https://tsapi.amap.com/v1/track/terminal/add
+#    track_utl: https://tsapi.amap.com/v1/track/trace/add
+#    search_url: https://tsapi.amap.com/v1/track/terminal/trsearch
   # map:
-  #   key: CHLQNMGv6QLfiBqF6dkS43lVGaF5SL2I   # 百度地图
-  #   service_id: 19405059
-  #   entity_url: http://yingyan.baidu.com/api/v3/entity/add     # POST
-  #   track_utl: http://yingyan.baidu.com/api/v3/track/gettrack  # GET
+     key: CHLQNMGv6QLfiBqF6dkS43lVGaF5SL2I   # 百度地图
+     service_id: 220524
+     entity_url: http://yingyan.baidu.com/api/v3/entity/add     # POST
+     entity_list: http://yingyan.baidu.com/api/v3/entity/list   # GET
+     track_url: http://yingyan.baidu.com/api/v3/track/gettrack  # GET

@@ -15,7 +15,8 @@ import (
 
 func (g *Gin) Login(c *gin.Context) {
 	var id int
-	var username, head, interest, meid, desc string
+	var username, interest, meid, desc string
+	var head interface{}
 	var login models.Login
 	err := c.BindJSON(&login)
 	if err != nil {
@@ -29,7 +30,11 @@ func (g *Gin) Login(c *gin.Context) {
 	}
 
 	db := base.DB.Raw("select id,username,head,interest,meid,phone_desc from user where password=? and phone=?", login.Password, login.Phone)
-	_ = db.Row().Scan(&id, &username, &head, &interest, &meid, &desc)
+	err = db.Row().Scan(&id, &username, &head, &interest, &meid, &desc)
+	if err != nil {
+		log.Error("查询失败: ", err)
+		return
+	}
 	if id == 0 {
 		log.Warn("查询用户信息失败,id: ", id)
 		c.JSON(http.StatusOK, gin.H{
@@ -40,14 +45,21 @@ func (g *Gin) Login(c *gin.Context) {
 		return
 	}
 
+	if head == nil {
+		head = ""
+	}
+
+	sid := base.MapConf.ServiceId
 	claims := &utils.MyClaims{
 		Id:        id,
 		Username:  username,
 		Password:  login.Password,
 		Mobile:    login.Phone,
-		Head:      head,
+		Head:      head.(string),
 		Meid:      meid,
 		PhoneDesc: desc,
+		//ServiceId: sid,
+		ServiceId: sid,
 		StandardClaims: jwt.StandardClaims{
 			NotBefore: time.Now().Unix() - 1000,                                             // 签名生效时间
 			ExpiresAt: time.Now().Add(time.Duration(7*utils.ExpireTime) * time.Hour).Unix(), // 过期时间
@@ -68,10 +80,40 @@ func (g *Gin) Login(c *gin.Context) {
 	// 将兴趣字符串转为切片
 	interests := strings.Split(interest, ",")
 
-	// 将设备添加到我们的轨迹服务中
-	tid, _ := addTerminal(meid, desc)
-	// 添加轨迹
-	trid, _ := addTrack(tid)
+	//// 将设备添加到我们的轨迹服务中
+	//tid, _ := addTerminal(meid, desc)
+	//// 添加轨迹
+	//trid, _ := addTrack(tid)
+
+	//res := models.LoginRes{
+	//	User: models.User{
+	//		Id:        id,
+	//		Username:  username,
+	//		Phone:     login.Phone,
+	//		Meid:      meid,
+	//		PhoneDesc: desc,
+	//		Head:      head,
+	//		Interest:  interests,
+	//	},
+	//	Map: models.MapRes{
+	//		ServiceId:  sid,
+	//		TerminalId: tid,
+	//		TrackId:    trid,
+	//	},
+	//	Token: token,
+	//}
+
+	// 将设备添加到百度地图
+	err = addEntity(sid, meid, desc)
+	if err != nil {
+		log.Error("创建百度地图服务失败: ", err)
+		c.JSON(http.StatusOK, gin.H{
+			"code":    http.StatusInternalServerError,
+			"data":    err,
+			"message": "创建百度地图服务失败!",
+		})
+		return
+	}
 
 	res := models.LoginRes{
 		User: models.User{
@@ -80,13 +122,12 @@ func (g *Gin) Login(c *gin.Context) {
 			Phone:     login.Phone,
 			Meid:      meid,
 			PhoneDesc: desc,
-			Head:      head,
+			Head:      head.(string),
 			Interest:  interests,
 		},
 		Map: models.MapRes{
 			ServiceId:  sid,
-			TerminalId: tid,
-			TrackId:    trid,
+			EntityName: meid,
 		},
 		Token: token,
 	}

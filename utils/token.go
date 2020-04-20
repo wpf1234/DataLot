@@ -22,6 +22,7 @@ type MyClaims struct {
 	Head      string `json:"head"`
 	Meid      string `json:"meid"`
 	PhoneDesc string `json:"phone_desc"`
+	ServiceId int64    `json:"service_id"`
 	jwt.StandardClaims
 }
 

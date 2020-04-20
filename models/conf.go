@@ -14,18 +14,19 @@ type LogConf struct {
 }
 
 // 高德地图配置
-type MapConf struct {
-	Key         string `json:"key"`
-	ServiceUrl  string `json:"service_url"`
-	TerminalUrl string `json:"terminal_url"`
-	TrackUrl    string `json:"track_url"`
-	SearchUrl   string `json:"search_url"`
-}
+//type MapConf struct {
+//	Key         string `json:"key"`
+//	ServiceUrl  string `json:"service_url"`
+//	TerminalUrl string `json:"terminal_url"`
+//	TrackUrl    string `json:"track_url"`
+//	SearchUrl   string `json:"search_url"`
+//}
 
 // 百度地图配置
-//type MapConf struct {
-//	ServiceId int    `json:"service_id"`
-//	Kry       string `json:"kry"`
-//	EntityUrl string `json:"entity_url"`
-//	TrackUrl  string `json:"track_url"`
-//}
+type MapConf struct {
+	ServiceId  int64  `json:"service_id"`
+	Key        string `json:"key"`
+	EntityUrl  string `json:"entity_url"`
+	EntityList string `json:"entity_list"`
+	TrackUrl   string `json:"track_url"`
+}

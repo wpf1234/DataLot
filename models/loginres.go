@@ -10,10 +10,17 @@ type User struct {
 	Interest  []string `json:"interest"`
 }
 
+// 高德地图相关信息
+//type MapRes struct {
+//	ServiceId  int `json:"service_id"`
+//	TerminalId int `json:"terminal_id"`
+//	TrackId    int `json:"track_id"`
+//}
+
+// 百度地图相关信息
 type MapRes struct {
-	ServiceId  int `json:"service_id"`
-	TerminalId int `json:"terminal_id"`
-	TrackId    int `json:"track_id"`
+	ServiceId  int64  `json:"service_id"`
+	EntityName string `json:"entity_name"`
 }
 
 type LoginRes struct {
