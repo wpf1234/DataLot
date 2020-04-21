@@ -18,6 +18,7 @@ type Gin struct{}
 const (
 	name = "data_lot"
 	desc = "世界很大我们曾相遇"
+	expire = 86400*180  // 过期时间，180天
 )
 
 var (

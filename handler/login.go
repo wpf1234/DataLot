@@ -50,6 +50,7 @@ func (g *Gin) Login(c *gin.Context) {
 	}
 
 	sid := base.MapConf.ServiceId
+	userSig, _ := utils.GenSig(int(base.IMC.Appid), base.IMC.Key, login.Phone, expire)
 	claims := &utils.MyClaims{
 		Id:        id,
 		Username:  username,
@@ -60,6 +61,7 @@ func (g *Gin) Login(c *gin.Context) {
 		PhoneDesc: desc,
 		//ServiceId: sid,
 		ServiceId: sid,
+		UserSig:   userSig,
 		StandardClaims: jwt.StandardClaims{
 			NotBefore: time.Now().Unix() - 1000,                                             // 签名生效时间
 			ExpiresAt: time.Now().Add(time.Duration(7*utils.ExpireTime) * time.Hour).Unix(), // 过期时间
@@ -124,6 +126,7 @@ func (g *Gin) Login(c *gin.Context) {
 			PhoneDesc: desc,
 			Head:      head.(string),
 			Interest:  interests,
+			UserSig:   userSig,
 		},
 		Map: models.MapRes{
 			ServiceId:  sid,
@@ -139,11 +142,11 @@ func (g *Gin) Login(c *gin.Context) {
 	})
 
 	t := time.Now().UnixNano() / 10e5
-	db = base.DB.Exec("update user set login_time=? where id=?", t, id)
+	db = base.DB.Exec("update user set login_time=?,user_sig=? where id=?", t, userSig, id)
 	fmt.Println("Update: ", db.RowsAffected)
 }
 
 // 微信登录
-func (g *Gin) WXLogin(c *gin.Context){
+func (g *Gin) WXLogin(c *gin.Context) {
 
 }

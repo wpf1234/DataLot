@@ -40,17 +40,22 @@ func main() {
 	auth.Use(middleware.JWTAuth())
 	{
 		// 动态圈
-		auth.GET("/dynamic", g.ViewList)      // 查看动态列表
-		auth.GET("/dynamic/one", g.ViewOne)   // 查看某个动态的详情
-		auth.GET("/dynamic/tags", g.Tags)     // 点赞
-		auth.POST("/dynamic", g.Release)      // 发表动态
-		auth.POST("/dynamic/comm", g.Comment) // 评论动态
-		auth.POST("/dynamic/reply", g.Reply)  // 答复评论
+		auth.GET("/dynamic", g.ViewList)             // 查看动态列表
+		auth.GET("/dynamic/one", g.ViewOne)          // 查看某个动态的详情
+		auth.GET("/dynamic/tags", g.Tags)            // 点赞
+		auth.POST("/dynamic", g.Release)             // 发表动态
+		auth.POST("/dynamic/comm", g.Comment)        // 评论动态
+		auth.POST("/dynamic/reply", g.Reply)         // 答复评论
+		auth.POST("/dynamic/upload", g.CyclePicture) // 上传图片(可上传多张图片)
 
 		auth.GET("/friend", g.AddFriend)    // 添加好友
 		auth.DELETE("/friend", g.DelFriend) // 删除好友
 
 		auth.GET("/track", g.GetTrack) // 获取轨迹
+
+		auth.GET("/refresh", g.Refresh) // 更新Token值
+
+		auth.POST("/upload", g.HeadPortrait) // 上传头像
 	}
 
 	// 注册 handler

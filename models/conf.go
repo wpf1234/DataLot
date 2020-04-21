@@ -30,3 +30,9 @@ type MapConf struct {
 	EntityList string `json:"entity_list"`
 	TrackUrl   string `json:"track_url"`
 }
+
+// 腾讯 IM 即时通讯
+type IMConf struct {
+	Appid int64  `json:"appid"`
+	Key   string `json:"key"`
+}

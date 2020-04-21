@@ -20,3 +20,6 @@ app:
      entity_url: http://yingyan.baidu.com/api/v3/entity/add     # POST
      entity_list: http://yingyan.baidu.com/api/v3/entity/list   # GET
      track_url: http://yingyan.baidu.com/api/v3/track/gettrack  # GET
+  tencent:
+    appid: 1400355024
+    key: 1d272644ec956a6dcb4456dba396c1d15b6dd899886c86680cb537298da1dbb5

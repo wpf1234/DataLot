@@ -47,3 +47,8 @@ type Dynamic struct {
 	Comment  int       `json:"comment"`
 	CommList []Comment `json:"comm_list"`
 }
+
+type UploadPIC struct {
+	UserId   int      `json:"user_id"`
+	Pictures []string `json:"pictures"`
+}

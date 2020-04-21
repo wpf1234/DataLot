@@ -8,6 +8,7 @@ type User struct {
 	PhoneDesc string   `json:"phone_desc"`
 	Head      string   `json:"head"`
 	Interest  []string `json:"interest"`
+	UserSig   string   `json:"user_sig"`
 }
 
 // 高德地图相关信息

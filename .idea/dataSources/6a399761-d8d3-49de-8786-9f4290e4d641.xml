@@ -1257,6 +1257,7 @@
       <Comment>手机唯一标识</Comment>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="304" parent="280" name="phone_desc">
@@ -1283,11 +1284,18 @@
       <DataType>text|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="308" parent="280" name="user_index">
+    <column id="308" parent="280" name="user_sig">
+      <Position>13</Position>
+      <Comment>腾讯云IM生成的UserSig</Comment>
+      <DataType>varchar(255)|0s</DataType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="309" parent="280" name="user_index">
       <ColNames>username</ColNames>
       <Type>fulltext</Type>
     </index>
-    <key id="309" parent="280" name="PRIMARY">
+    <key id="310" parent="280" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>

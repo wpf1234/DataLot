@@ -25,6 +25,7 @@ var (
 	mc      models.MysqlConf
 	lc      models.LogConf
 	MapConf models.MapConf
+	IMC models.IMConf
 
 	DB *gorm.DB
 )
@@ -88,4 +89,10 @@ func Init() {
 		return
 	}
 	log.Info("读取地图资源配置成功!")
+
+	if err := config.Get(defaultPath, "tencent").Scan(&IMC); err != nil {
+		log.Error("IM即时通讯配置失败: ", err)
+		return
+	}
+	log.Info("IM即时通讯配置成功!")
 }
