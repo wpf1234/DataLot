@@ -34,6 +34,7 @@ func main() {
 	noAuth.POST("/login", g.Login)
 	noAuth.POST("/register", g.Register)
 	//noAuth.DELETE("/friend",g.DelFriend)
+	noAuth.POST("/reset", g.ResetPwd)
 
 	auth := router.Group("/v1/lot/auth")
 	auth.Use(middleware.JWTAuth())

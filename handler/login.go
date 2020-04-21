@@ -142,3 +142,8 @@ func (g *Gin) Login(c *gin.Context) {
 	db = base.DB.Exec("update user set login_time=? where id=?", t, id)
 	fmt.Println("Update: ", db.RowsAffected)
 }
+
+// 微信登录
+func (g *Gin) WXLogin(c *gin.Context){
+
+}

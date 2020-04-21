@@ -13,3 +13,8 @@ type Register struct {
 	PhoneDesc string   `json:"phone_desc"`
 	Interest  []string `json:"interest"`
 }
+
+type Reset struct {
+	Phone       string `json:"phone"`
+	NewPassword string `json:"new_password"`
+}
