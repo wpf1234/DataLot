@@ -26,12 +26,20 @@ func (g *Gin) Register(c *gin.Context) {
 	}
 
 	// 将数组转换成字符串
-	interest = utils.Slice2Str(reg.Interest)
+	if reg.Interest == nil {
+		interest = ""
+	} else {
+		interest = utils.Slice2Str(reg.Interest)
+	}
+
+	if reg.Username == "" {
+		reg.Username = "lot_" + reg.Phone
+	}
 
 	t := time.Now().UnixNano() / 10e5
 	db := base.DB.Exec(`insert into user set create_at=?,username=?,password=?,phone=?,interest=?,
-		meid=?,phone_desc=?,reg_time=?`,
-		t, reg.Username, reg.Password, reg.Phone, interest,reg.Meid, reg.PhoneDesc, t)
+		reg_time=?`,
+		t, reg.Username, reg.Password, reg.Phone, interest, t)
 	err = db.Error
 	if err != nil {
 		log.Error("新增用户失败: ", err)

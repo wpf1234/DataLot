@@ -1,0 +1,22 @@
+{"file":"D:/Golang-program/datalot/base/base.go:57","func":"datalot/base.Init","level":"info","msg":"读取 Mysql 配置成功!","time":"2020-04-22 10:20:36"}
+{"file":"D:/Golang-program/datalot/base/base.go:85","func":"datalot/base.Init","level":"info","msg":"数据库连接成功!","time":"2020-04-22 10:20:36"}
+{"file":"D:/Golang-program/datalot/base/base.go:91","func":"datalot/base.Init","level":"info","msg":"读取地图资源配置成功!","time":"2020-04-22 10:20:36"}
+{"file":"D:/Golang-program/datalot/base/base.go:97","func":"datalot/base.Init","level":"info","msg":"IM即时通讯配置成功!","time":"2020-04-22 10:20:36"}
+{"file":"D:/Golang-program/datalot/base/base.go:57","func":"datalot/base.Init","level":"info","msg":"读取 Mysql 配置成功!","time":"2020-04-22 10:57:44"}
+{"file":"D:/Golang-program/datalot/base/base.go:85","func":"datalot/base.Init","level":"info","msg":"数据库连接成功!","time":"2020-04-22 10:57:44"}
+{"file":"D:/Golang-program/datalot/base/base.go:91","func":"datalot/base.Init","level":"info","msg":"读取地图资源配置成功!","time":"2020-04-22 10:57:44"}
+{"file":"D:/Golang-program/datalot/base/base.go:97","func":"datalot/base.Init","level":"info","msg":"IM即时通讯配置成功!","time":"2020-04-22 10:57:44"}
+{"file":"D:/Golang-program/datalot/base/base.go:57","func":"datalot/base.Init","level":"info","msg":"读取 Mysql 配置成功!","time":"2020-04-22 11:01:56"}
+{"file":"D:/Golang-program/datalot/base/base.go:85","func":"datalot/base.Init","level":"info","msg":"数据库连接成功!","time":"2020-04-22 11:01:56"}
+{"file":"D:/Golang-program/datalot/base/base.go:91","func":"datalot/base.Init","level":"info","msg":"读取地图资源配置成功!","time":"2020-04-22 11:01:56"}
+{"file":"D:/Golang-program/datalot/base/base.go:97","func":"datalot/base.Init","level":"info","msg":"IM即时通讯配置成功!","time":"2020-04-22 11:01:56"}
+{"file":"D:/Golang-program/datalot/handler/login.go:35","func":"datalot/handler.(*Gin).Login","level":"error","msg":"查询失败: sql: no rows in result set","time":"2020-04-22 12:29:41"}
+{"file":"D:/Golang-program/datalot/base/base.go:57","func":"datalot/base.Init","level":"info","msg":"读取 Mysql 配置成功!","time":"2020-04-22 12:32:54"}
+{"file":"D:/Golang-program/datalot/base/base.go:85","func":"datalot/base.Init","level":"info","msg":"数据库连接成功!","time":"2020-04-22 12:32:54"}
+{"file":"D:/Golang-program/datalot/base/base.go:91","func":"datalot/base.Init","level":"info","msg":"读取地图资源配置成功!","time":"2020-04-22 12:32:54"}
+{"file":"D:/Golang-program/datalot/base/base.go:97","func":"datalot/base.Init","level":"info","msg":"IM即时通讯配置成功!","time":"2020-04-22 12:32:54"}
+{"file":"D:/Golang-program/datalot/handler/login.go:35","func":"datalot/handler.(*Gin).Login","level":"error","msg":"查询失败: sql: no rows in result set","time":"2020-04-22 12:33:01"}
+{"file":"D:/Golang-program/datalot/handler/login.go:54","func":"datalot/handler.(*Gin).Login","level":"warning","msg":"登录密码不正确!!!","time":"2020-04-22 12:35:38"}
+{"file":"D:/Golang-program/datalot/handler/login.go:54","func":"datalot/handler.(*Gin).Login","level":"warning","msg":"登录密码不正确!!!","time":"2020-04-22 12:36:55"}
+{"file":"D:/Golang-program/datalot/handler/login.go:54","func":"datalot/handler.(*Gin).Login","level":"warning","msg":"登录密码不正确!!!","time":"2020-04-22 12:37:30"}
+{"file":"D:/Golang-program/datalot/handler/login.go:54","func":"datalot/handler.(*Gin).Login","level":"warning","msg":"登录密码不正确!!!","time":"2020-04-22 12:38:07"}

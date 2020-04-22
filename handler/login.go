@@ -9,13 +9,14 @@ import (
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 )
 
 func (g *Gin) Login(c *gin.Context) {
 	var id int
-	var username, interest, meid, desc string
+	var username, interest, pwd string
 	var head interface{}
 	var login models.Login
 	err := c.BindJSON(&login)
@@ -29,10 +30,15 @@ func (g *Gin) Login(c *gin.Context) {
 		return
 	}
 
-	db := base.DB.Raw("select id,username,head,interest,meid,phone_desc from user where password=? and phone=?", login.Password, login.Phone)
-	err = db.Row().Scan(&id, &username, &head, &interest, &meid, &desc)
+	db := base.DB.Raw("select id,username,password,head,interest from user where phone=?", login.Phone)
+	err = db.Row().Scan(&id, &username, &pwd, &head, &interest)
 	if err != nil {
 		log.Error("查询失败: ", err)
+		c.JSON(http.StatusOK, gin.H{
+			"code":    http.StatusInternalServerError,
+			"data":    err,
+			"message": "请求失败!",
+		})
 		return
 	}
 	if id == 0 {
@@ -45,20 +51,31 @@ func (g *Gin) Login(c *gin.Context) {
 		return
 	}
 
+	if login.Password != pwd {
+		log.Warn("登录密码不正确!!!")
+		c.JSON(http.StatusOK, gin.H{
+			"code":    http.StatusInternalServerError,
+			"data":    nil,
+			"message": "密码不正确!",
+		})
+		return
+	}
+
 	if head == nil {
 		head = ""
 	}
 
 	sid := base.MapConf.ServiceId
-	userSig, _ := utils.GenSig(int(base.IMC.Appid), base.IMC.Key, login.Phone, expire)
+	userId := strconv.Itoa(id)
+	userSig, _ := utils.GenSig(int(base.IMC.Appid), base.IMC.Key, userId, expire)
 	claims := &utils.MyClaims{
 		Id:        id,
 		Username:  username,
 		Password:  login.Password,
 		Mobile:    login.Phone,
 		Head:      head.(string),
-		Meid:      meid,
-		PhoneDesc: desc,
+		Meid:      login.Meid,
+		PhoneDesc: login.Desc,
 		//ServiceId: sid,
 		ServiceId: sid,
 		UserSig:   userSig,
@@ -106,7 +123,7 @@ func (g *Gin) Login(c *gin.Context) {
 	//}
 
 	// 将设备添加到百度地图
-	err = addEntity(sid, meid, desc)
+	err = addEntity(sid, login.Phone, login.Desc)
 	if err != nil {
 		log.Error("创建百度地图服务失败: ", err)
 		c.JSON(http.StatusOK, gin.H{
@@ -122,15 +139,15 @@ func (g *Gin) Login(c *gin.Context) {
 			Id:        id,
 			Username:  username,
 			Phone:     login.Phone,
-			Meid:      meid,
-			PhoneDesc: desc,
+			Meid:      login.Meid,
+			PhoneDesc: login.Desc,
 			Head:      head.(string),
 			Interest:  interests,
 			UserSig:   userSig,
 		},
 		Map: models.MapRes{
 			ServiceId:  sid,
-			EntityName: meid,
+			EntityName: login.Meid,
 		},
 		Token: token,
 	}
@@ -142,7 +159,8 @@ func (g *Gin) Login(c *gin.Context) {
 	})
 
 	t := time.Now().UnixNano() / 10e5
-	db = base.DB.Exec("update user set login_time=?,user_sig=? where id=?", t, userSig, id)
+	db = base.DB.Exec("update user set meid=?,phone_desc=?,login_time=?,user_sig=? where id=?",
+		login.Meid, login.Desc, t, userSig, id)
 	fmt.Println("Update: ", db.RowsAffected)
 }
 
