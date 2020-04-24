@@ -270,7 +270,7 @@ func addEntity(sid int64, meid, desc string) error {
 
 // 上传轨迹点
 func addPoint(sid int64,list []interface{}) ([]byte,error){
-	
+	return nil, nil
 }
 
 // 查询轨迹
