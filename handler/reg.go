@@ -35,7 +35,7 @@ func (g *Gin) Register(c *gin.Context) {
 	if reg.Username == "" {
 		reg.Username = "lot_" + reg.Phone
 	}
-
+	reg.Password = utils.StrMd5(reg.Password)
 	t := time.Now().UnixNano() / 10e5
 	db := base.DB.Exec(`insert into user set create_at=?,username=?,password=?,phone=?,interest=?,
 		reg_time=?`,

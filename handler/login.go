@@ -50,8 +50,8 @@ func (g *Gin) Login(c *gin.Context) {
 		})
 		return
 	}
-
-	if login.Password != pwd {
+	password := utils.StrMd5(login.Password)
+	if password != pwd {
 		log.Warn("登录密码不正确!!!")
 		c.JSON(http.StatusOK, gin.H{
 			"code":    http.StatusInternalServerError,
@@ -71,7 +71,7 @@ func (g *Gin) Login(c *gin.Context) {
 	claims := &utils.MyClaims{
 		Id:        id,
 		Username:  username,
-		Password:  login.Password,
+		Password:  password,
 		Mobile:    login.Phone,
 		Head:      head.(string),
 		Meid:      login.Meid,

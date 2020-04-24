@@ -20,3 +20,9 @@
 {"file":"D:/Golang-program/datalot/handler/login.go:54","func":"datalot/handler.(*Gin).Login","level":"warning","msg":"登录密码不正确!!!","time":"2020-04-22 12:36:55"}
 {"file":"D:/Golang-program/datalot/handler/login.go:54","func":"datalot/handler.(*Gin).Login","level":"warning","msg":"登录密码不正确!!!","time":"2020-04-22 12:37:30"}
 {"file":"D:/Golang-program/datalot/handler/login.go:54","func":"datalot/handler.(*Gin).Login","level":"warning","msg":"登录密码不正确!!!","time":"2020-04-22 12:38:07"}
+{"file":"D:/Golang-program/datalot/base/base.go:57","func":"datalot/base.Init","level":"info","msg":"读取 Mysql 配置成功!","time":"2020-04-22 13:48:24"}
+{"file":"D:/Golang-program/datalot/base/base.go:85","func":"datalot/base.Init","level":"info","msg":"数据库连接成功!","time":"2020-04-22 13:48:24"}
+{"file":"D:/Golang-program/datalot/base/base.go:91","func":"datalot/base.Init","level":"info","msg":"读取地图资源配置成功!","time":"2020-04-22 13:48:24"}
+{"file":"D:/Golang-program/datalot/base/base.go:97","func":"datalot/base.Init","level":"info","msg":"IM即时通讯配置成功!","time":"2020-04-22 13:48:24"}
+{"file":"D:/Golang-program/datalot/handler/login.go:55","func":"datalot/handler.(*Gin).Login","level":"warning","msg":"登录密码不正确!!!","time":"2020-04-22 17:08:20"}
+{"file":"D:/Golang-program/datalot/handler/login.go:55","func":"datalot/handler.(*Gin).Login","level":"warning","msg":"登录密码不正确!!!","time":"2020-04-22 17:08:23"}
