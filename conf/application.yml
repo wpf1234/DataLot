@@ -19,6 +19,7 @@ app:
      service_id: 220524
      entity_url: http://yingyan.baidu.com/api/v3/entity/add     # POST
      entity_list: http://yingyan.baidu.com/api/v3/entity/list   # GET
+     add_point: http://yingyan.baidu.com/api/v3/track/addpoints #POST请求
      track_url: http://yingyan.baidu.com/api/v3/track/gettrack  # GET
   tencent:
     appid: 1400355024  #1400356717 #1400355024

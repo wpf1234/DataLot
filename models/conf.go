@@ -28,6 +28,7 @@ type MapConf struct {
 	Key        string `json:"key"`
 	EntityUrl  string `json:"entity_url"`
 	EntityList string `json:"entity_list"`
+	AddPoint   string `json:"add_point"`
 	TrackUrl   string `json:"track_url"`
 }
 

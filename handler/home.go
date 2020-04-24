@@ -268,6 +268,12 @@ func addEntity(sid int64, meid, desc string) error {
 	return nil
 }
 
+// 上传轨迹点
+func addPoint(sid int64,list []interface{}) ([]byte,error){
+	
+}
+
+// 查询轨迹
 func track(sid int64, entity string, start, end int64) ([]byte, error) {
 	key := base.MapConf.Key
 	uri := base.MapConf.TrackUrl

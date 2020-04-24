@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bb9ec945-881b-4c49-882f-ece44134ae15" name="Default Changelist" comment="add-friend">
-      <change afterPath="$PROJECT_DIR$/utils/MD5.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/MD5_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/login.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/login.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/reg.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/reg.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/appLog.20200422.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/appLog.20200422.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/conf/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/home.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/home.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/jwt.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/jwt.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/conf.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/conf.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
