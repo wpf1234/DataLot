@@ -41,7 +41,7 @@ func main() {
 	{
 		// 动态圈
 		auth.GET("/dynamic", g.ViewList)             // 查看动态列表
-		auth.GET("/dynamic/one", g.ViewOne)          // 查看某个动态的详情
+		//auth.GET("/dynamic/one", g.ViewOne)          // 查看某个动态的详情
 		auth.GET("/dynamic/tags", g.Tags)            // 点赞
 		auth.POST("/dynamic", g.Release)             // 发表动态
 		auth.POST("/dynamic/comm", g.Comment)        // 评论动态

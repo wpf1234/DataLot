@@ -1130,55 +1130,67 @@
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="284" parent="278" name="comment">
+    <column id="284" parent="278" name="username">
       <Position>4</Position>
+      <Comment>用户名</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="285" parent="278" name="head">
+      <Position>5</Position>
+      <Comment>头像</Comment>
+      <DataType>varchar(255)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="286" parent="278" name="comment">
+      <Position>6</Position>
       <Comment>评论内容</Comment>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="285" parent="278" name="comm_tm">
-      <Position>5</Position>
+    <column id="287" parent="278" name="comm_tm">
+      <Position>7</Position>
       <Comment>评论的时间戳</Comment>
       <DataType>bigint(13) unsigned|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="286" parent="278" name="reply">
-      <Position>6</Position>
+    <column id="288" parent="278" name="reply">
+      <Position>8</Position>
       <Comment>该评论答复信息</Comment>
       <DataType>longtext|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="287" parent="278" name="PRIMARY">
+    <key id="289" parent="278" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="288" parent="279" name="id">
+    <column id="290" parent="279" name="id">
       <Position>1</Position>
       <DataType>int(11) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="289" parent="279" name="u_id">
+    <column id="291" parent="279" name="u_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="290" parent="279" name="content">
+    <column id="292" parent="279" name="content">
       <Position>3</Position>
       <Comment>动态圈的文字</Comment>
       <DataType>text|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="291" parent="279" name="picture">
+    <column id="293" parent="279" name="picture">
       <Position>4</Position>
       <Comment>动态圈的图片</Comment>
       <DataType>longtext|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="292" parent="279" name="authority">
+    <column id="294" parent="279" name="authority">
       <Position>5</Position>
       <Comment>权限</Comment>
       <DataType>tinyint(4)|0s</DataType>
@@ -1186,13 +1198,13 @@
       <DefaultExpression>0</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="293" parent="279" name="create_at">
+    <column id="295" parent="279" name="create_at">
       <Position>6</Position>
       <Comment>动态时间</Comment>
       <DataType>bigint(13) unsigned|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="294" parent="279" name="f_num">
+    <column id="296" parent="279" name="f_num">
       <Position>7</Position>
       <Comment>喜欢的人数</Comment>
       <DataType>int(11) unsigned|0s</DataType>
@@ -1200,59 +1212,59 @@
       <DefaultExpression>0</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="295" parent="279" name="PRIMARY">
+    <key id="297" parent="279" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="296" parent="280" name="id">
+    <column id="298" parent="280" name="id">
       <Position>1</Position>
       <DataType>int(11) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="297" parent="280" name="create_at">
+    <column id="299" parent="280" name="create_at">
       <Position>2</Position>
       <Comment>创建时间(单位：ms)</Comment>
       <DataType>bigint(13)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="298" parent="280" name="username">
+    <column id="300" parent="280" name="username">
       <Position>3</Position>
       <Comment>用户名</Comment>
       <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="299" parent="280" name="password">
+    <column id="301" parent="280" name="password">
       <Position>4</Position>
       <Comment>密码</Comment>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="300" parent="280" name="head">
+    <column id="302" parent="280" name="head">
       <Position>5</Position>
       <Comment>头像</Comment>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="301" parent="280" name="interest">
+    <column id="303" parent="280" name="interest">
       <Position>6</Position>
       <Comment>兴趣爱好</Comment>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="302" parent="280" name="phone">
+    <column id="304" parent="280" name="phone">
       <Position>7</Position>
       <Comment>电话号码</Comment>
       <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="303" parent="280" name="meid">
+    <column id="305" parent="280" name="meid">
       <Position>8</Position>
       <Comment>手机唯一标识</Comment>
       <DataType>varchar(50)|0s</DataType>
@@ -1260,42 +1272,42 @@
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="304" parent="280" name="phone_desc">
+    <column id="306" parent="280" name="phone_desc">
       <Position>9</Position>
       <Comment>手机信息的简介</Comment>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="305" parent="280" name="login_time">
+    <column id="307" parent="280" name="login_time">
       <Position>10</Position>
       <Comment>登录时间(ms)</Comment>
       <DataType>bigint(13)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="306" parent="280" name="reg_time">
+    <column id="308" parent="280" name="reg_time">
       <Position>11</Position>
       <Comment>注册时间（ms）</Comment>
       <DataType>bigint(13)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="307" parent="280" name="friends">
+    <column id="309" parent="280" name="friends">
       <Position>12</Position>
       <Comment>好友ID列表</Comment>
       <DataType>text|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="308" parent="280" name="user_sig">
+    <column id="310" parent="280" name="user_sig">
       <Position>13</Position>
       <Comment>腾讯云IM生成的UserSig</Comment>
       <DataType>varchar(255)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="309" parent="280" name="user_index">
+    <index id="311" parent="280" name="user_index">
       <ColNames>username</ColNames>
       <Type>fulltext</Type>
     </index>
-    <key id="310" parent="280" name="PRIMARY">
+    <key id="312" parent="280" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>

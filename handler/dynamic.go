@@ -106,6 +106,9 @@ func (g *Gin) ViewList(c *gin.Context) {
 		l.Picture = strings.Split(p, ",")
 		db = base.DB.Raw("select count(1) from comment where d_id=?", l.Id)
 		db.Scan(&l.Comment)
+		comm,_:=comment(l.Id)
+		l.CommList=comm
+		l.Active=false
 		list = append(list, l)
 	}
 	// 好友动态
@@ -135,6 +138,9 @@ func (g *Gin) ViewList(c *gin.Context) {
 			l.Picture = strings.Split(p, ",")
 			db = base.DB.Raw("select count(1) from comment where d_id=?", l.Id)
 			db.Scan(&l.Comment)
+			comm,_:=comment(l.Id)
+			l.CommList=comm
+			l.Active=false
 			list = append(list, l)
 		}
 	}
@@ -161,6 +167,9 @@ func (g *Gin) ViewList(c *gin.Context) {
 		l.Picture = strings.Split(p, ",")
 		db = base.DB.Raw("select count(1) from comment where d_id=?", l.Id)
 		db.Scan(&l.Comment)
+		comm,_:=comment(l.Id)
+		l.CommList=comm
+		l.Active=false
 		list = append(list, l)
 	}
 	_ = rows.Close()
@@ -185,52 +194,37 @@ func (g *Gin) ViewList(c *gin.Context) {
 }
 
 // 查看某一个动态的详情
-func (g *Gin) ViewOne(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Query("id"))
-	if id == 0 {
-		log.Error("获取参数失败,id=", id)
-		c.JSON(http.StatusOK, gin.H{
-			"code":    http.StatusBadRequest,
-			"data":    nil,
-			"message": "请求失败!",
-		})
-		return
-	}
+func comment(dynamicId int) ([]models.Comment,error) {
 
 	// 查询该id 动态的信息
 	// 获取基本信息
-	sql := fmt.Sprintf(`select * from 
-		(select id,u_id,content,picture,create_at,f_num from dynamic where id=%d) as a 
-		left join 
-		(select id,username,head from user) as b 
-		on a.u_id=b.id`, id)
-	db := base.DB.Raw(sql)
-	var dynamic models.Dynamic
-	var picture string
-	var uId, uuid int
-	_ = db.Row().Scan(&dynamic.Id, &uId, &dynamic.Content, &picture, &dynamic.Tm, &dynamic.Favorite,
-		&uuid, &dynamic.Username, &dynamic.Head)
-	dynamic.Picture = strings.Split(picture, ",")
+	//sql := fmt.Sprintf(`select * from
+	//	(select id,u_id,content,picture,create_at,f_num from dynamic where id=%d) as a
+	//	left join
+	//	(select id,username,head from user) as b
+	//	on a.u_id=b.id`, dynamicId)
+	//db := base.DB.Raw(sql)
+	//var dynamic models.Dynamic
+	//var picture string
+	//var uId, uuid int
+	//_ = db.Row().Scan(&dynamic.Id, &uId, &dynamic.Content, &picture, &dynamic.Tm, &dynamic.Favorite,
+	//	&uuid, &dynamic.Username, &dynamic.Head)
+	//dynamic.Picture = strings.Split(picture, ",")
 
 	// 获取评论信息
-	db = base.DB.Raw("select count(1) from comment where d_id=?", id)
-	_ = db.Row().Scan(&dynamic.Comment)
+	//db := base.DB.Raw("select count(1) from comment where d_id=?", dynamicId)
+	//_ = db.Row().Scan(&dynamic.Comment)
 
 	var comments []models.Comment
-	db = base.DB.Raw(`select * from 
+	db := base.DB.Raw(`select * from 
 		(select u_id,comment,comm_tm,reply from comment where d_id=?) as a 
 		left join 
 		(select id,username,head from user) as b 
-		on a.u_id=b.id`, id)
+		on a.u_id=b.id`, dynamicId)
 	rows, err := db.Rows()
 	if err != nil {
 		log.Error("获取评论人信息失败: ", err)
-		c.JSON(http.StatusOK, gin.H{
-			"code":    http.StatusInternalServerError,
-			"data":    err,
-			"message": "获取评论人信息失败!",
-		})
-		return
+		return nil,err
 	}
 
 	for rows.Next() {
@@ -239,31 +233,20 @@ func (g *Gin) ViewOne(c *gin.Context) {
 		var r=make([]byte,0)
 		var uId int
 		_ = rows.Scan(&uId, &comm.Context, &comm.Tm, &r,
-			&comm.UserId, &comm.CommUser, &comm.Head)
+			&comm.Id, &comm.CommUser, &comm.Head)
 		err = json.Unmarshal(r, &reply)
 		if err != nil {
 			log.Error("数据转换失败: ", err)
-			c.JSON(http.StatusOK, gin.H{
-				"code":    http.StatusInternalServerError,
-				"data":    err,
-				"message": "数据转换失败!",
-			})
-			return
+			return nil,err
 		}
 		comm.Reply = reply
-		comm.DynamicId = id
+		comm.DynamicId = dynamicId
 
 		comments = append(comments, comm)
 	}
 	_ = rows.Close()
 
-	dynamic.CommList = comments
-
-	c.JSON(http.StatusOK, gin.H{
-		"code":    http.StatusOK,
-		"data":    dynamic,
-		"message": "获取某动态信息成功!",
-	})
+	return comments,nil
 }
 
 // 评论某个动态
@@ -279,7 +262,8 @@ func (g *Gin) Comment(c *gin.Context) {
 		return
 	}
 	userId := claims.(*utils.MyClaims).Id // user_id
-	//myHead := claims.(*utils.MyClaims).Head
+	username:= claims.(*utils.MyClaims).Username
+	myHead := claims.(*utils.MyClaims).Head
 
 	var comm models.WriteComm
 	err:=c.BindJSON(&comm)
@@ -298,8 +282,8 @@ func (g *Gin) Comment(c *gin.Context) {
 
 	// 将数据存入数据库
 	tm:=time.Now().UnixNano()/10e5
-	db:=base.DB.Exec("insert into comment set d_id=?,u_id=?,comment=?,comm_tm=?",
-		comm.DynamicId,comm.UserId,comm.Context,tm)
+	db:=base.DB.Exec("insert into comment set d_id=?,u_id=?,username=?,head=?,comment=?,comm_tm=?",
+		comm.DynamicId,comm.UserId,username,myHead,comm.Context,tm)
 	err=db.Error
 	if err!=nil{
 		log.Error("插入失败: ",err)
@@ -350,7 +334,7 @@ func (g *Gin) Reply(c *gin.Context){
 	if len(reply) == 0{
 		// 暂无评论
 		var newReply models.Reply
-		newReply.UserId=userId
+		newReply.Id=userId
 		newReply.ReplyUser=username
 		newReply.Context=re.Context
 		newReply.Tm=re.Tm
@@ -379,7 +363,7 @@ func (g *Gin) Reply(c *gin.Context){
 		_=json.Unmarshal(reply,&replays)
 
 		var newReply models.Reply
-		newReply.UserId=userId
+		newReply.Id=userId
 		newReply.ReplyUser=username
 		newReply.Context=re.Context
 		newReply.Tm=re.Tm
@@ -413,9 +397,10 @@ func (g *Gin) Reply(c *gin.Context){
 	})
 }
 
-// 点赞
+// 点赞、取消
 func (g *Gin) Tags (c *gin.Context){
 	id,_:=strconv.Atoi(c.Query("id"))
+	like,_:=strconv.Atoi(c.Query("like"))
 	if id == 0{
 		log.Error("请求参数错误,id=",id)
 		c.JSON(http.StatusOK, gin.H{
@@ -430,7 +415,12 @@ func (g *Gin) Tags (c *gin.Context){
 	db:=base.DB.Raw("select f_num from dynamic where id=?",id)
 	_=db.Row().Scan(&count)
 
-	count=count+1
+	if like == 1{
+		count=count+1
+	}else{
+		count=count-1
+	}
+
 
 	db=base.DB.Exec("update dynamic set f_num=? where id=?",count,id)
 	fmt.Println("Update: ",db.RowsAffected)
@@ -438,6 +428,6 @@ func (g *Gin) Tags (c *gin.Context){
 	c.JSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"data":    nil,
-		"message": "点赞成功!",
+		"message": "成功!",
 	})
 }

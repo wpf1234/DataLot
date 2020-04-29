@@ -8,7 +8,7 @@ type Content struct {
 
 type Comment struct {
 	DynamicId int     `json:"dynamic_id"`
-	UserId    int     `json:"user_id"`
+	Id        int     `json:"id"` //用户ID
 	CommUser  string  `json:"comm_user"`
 	Head      string  `json:"head"`
 	Context   string  `json:"context"`
@@ -23,7 +23,7 @@ type WriteComm struct {
 }
 
 type Reply struct {
-	UserId    int    `json:"user_id"`
+	Id        int    `json:"id"` // 用户ID
 	ReplyUser string `json:"reply_user"`
 	Context   string `json:"context"`
 	Tm        int64  `json:"tm"`
@@ -46,6 +46,7 @@ type Dynamic struct {
 	Favorite int       `json:"favorite"`
 	Comment  int       `json:"comment"`
 	CommList []Comment `json:"comm_list"`
+	Active   bool      `json:"active"`
 }
 
 type UploadPIC struct {
