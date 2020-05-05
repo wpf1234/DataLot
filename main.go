@@ -35,6 +35,8 @@ func main() {
 	noAuth.POST("/register", g.Register)
 	//noAuth.DELETE("/friend",g.DelFriend)
 	noAuth.POST("/reset", g.ResetPwd)
+	//noAuth.POST("/dynamic/upload", g.CyclePicture)
+	noAuth.GET("/preview",g.OnlinePreview)
 
 	auth := router.Group("/v1/lot/auth")
 	auth.Use(middleware.JWTAuth())
@@ -47,6 +49,8 @@ func main() {
 		auth.POST("/dynamic/comm", g.Comment)        // 评论动态
 		auth.POST("/dynamic/reply", g.Reply)         // 答复评论
 		auth.POST("/dynamic/upload", g.CyclePicture) // 上传图片(可上传多张图片)
+		auth.GET("/dynamic/mine",g.GetMyDynamic)
+
 
 		auth.GET("/friend", g.AddFriend)    // 添加好友
 		auth.DELETE("/friend", g.DelFriend) // 删除好友

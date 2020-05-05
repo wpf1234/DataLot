@@ -25,7 +25,7 @@ type MapRes struct {
 }
 
 type LoginRes struct {
-	User  User   `json:"user"`
-	Map   MapRes `json:"map"`
-	Token string `json:"token"`
+	User    User        `json:"user"`
+	Map     MapRes      `json:"map"`
+	Token   string      `json:"token"`
 }

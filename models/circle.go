@@ -46,10 +46,31 @@ type Dynamic struct {
 	Favorite int       `json:"favorite"`
 	Comment  int       `json:"comment"`
 	CommList []Comment `json:"comm_list"`
-	Active   bool      `json:"active"`
+	Like     bool      `json:"like"`
+	Show     bool      `json:"show"`
+	Flex     int       `json:"flex"`
+}
+
+type MyDynamic struct {
+	Id       int       `json:"id"`
+	Username string    `json:"username"`
+	Head     string    `json:"head"`
+	Content  string    `json:"content"`
+	Picture  []string  `json:"picture"`
+	Tm       int64     `json:"tm"`
+	Favorite int       `json:"favorite"`
+	Comment  int       `json:"comment"`
+	CommList []Comment `json:"comm_list"`
+	Flex     int       `json:"flex"`
+}
+
+type Circle struct {
+	Recommend []Dynamic `json:"recommend"`
+	Friend    []Dynamic `json:"friend"`
+	My        []Dynamic `json:"my"`
 }
 
 type UploadPIC struct {
-	UserId   int      `json:"user_id"`
-	Pictures []string `json:"pictures"`
+	UserId  int    `json:"user_id"`
+	Picture string `json:"picture"`
 }

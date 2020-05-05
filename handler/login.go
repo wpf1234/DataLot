@@ -168,3 +168,9 @@ func (g *Gin) Login(c *gin.Context) {
 func (g *Gin) WXLogin(c *gin.Context) {
 
 }
+
+
+// 验证码登录
+func (g *Gin) AuthCodeLogin(c *gin.Context) {
+
+}

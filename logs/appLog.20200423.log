@@ -1,8 +1,0 @@
-{"file":"D:/Golang-program/datalot/base/base.go:57","func":"datalot/base.Init","level":"info","msg":"读取 Mysql 配置成功!","time":"2020-04-23 12:25:43"}
-{"file":"D:/Golang-program/datalot/base/base.go:85","func":"datalot/base.Init","level":"info","msg":"数据库连接成功!","time":"2020-04-23 12:25:43"}
-{"file":"D:/Golang-program/datalot/base/base.go:91","func":"datalot/base.Init","level":"info","msg":"读取地图资源配置成功!","time":"2020-04-23 12:25:43"}
-{"file":"D:/Golang-program/datalot/base/base.go:97","func":"datalot/base.Init","level":"info","msg":"IM即时通讯配置成功!","time":"2020-04-23 12:25:43"}
-{"file":"D:/Golang-program/datalot/base/base.go:57","func":"datalot/base.Init","level":"info","msg":"读取 Mysql 配置成功!","time":"2020-04-23 14:31:29"}
-{"file":"D:/Golang-program/datalot/base/base.go:85","func":"datalot/base.Init","level":"info","msg":"数据库连接成功!","time":"2020-04-23 14:31:29"}
-{"file":"D:/Golang-program/datalot/base/base.go:91","func":"datalot/base.Init","level":"info","msg":"读取地图资源配置成功!","time":"2020-04-23 14:31:29"}
-{"file":"D:/Golang-program/datalot/base/base.go:97","func":"datalot/base.Init","level":"info","msg":"IM即时通讯配置成功!","time":"2020-04-23 14:31:29"}
