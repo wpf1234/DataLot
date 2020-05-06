@@ -170,8 +170,8 @@ order by a.create_at desc`)
 		l.Picture = strings.Split(p, ",")
 		if auth == 1 {
 			b, err := utils.AesEncrypt([]byte(l.Username), []byte("usernamepassword"))
-			if err!=nil{
-				log.Error("ASE error: ",err)
+			if err != nil {
+				log.Error("ASE error: ", err)
 				return
 			}
 			l.Username = base64.StdEncoding.EncodeToString(b)
@@ -497,7 +497,7 @@ order by create_at desc`, userId)
 		comm, _ := comment(l.Id)
 		l.CommList = comm
 		l.Username = username
-		l.Head = head
+		l.Head = preview + head
 		my = append(my, l)
 	}
 	_ = rows.Close()
