@@ -12,7 +12,6 @@ type Comment struct {
 	CommUser  string  `json:"comm_user"`
 	Head      string  `json:"head"`
 	Context   string  `json:"context"`
-	Reply     []Reply `json:"reply"`
 	Tm        int64   `json:"tm"`
 }
 
@@ -48,7 +47,6 @@ type Dynamic struct {
 	CommList []Comment `json:"comm_list"`
 	Like     bool      `json:"like"`
 	Show     bool      `json:"show"`
-	Flex     int       `json:"flex"`
 }
 
 type MyDynamic struct {
@@ -67,7 +65,6 @@ type MyDynamic struct {
 type Circle struct {
 	Recommend []Dynamic `json:"recommend"`
 	Friend    []Dynamic `json:"friend"`
-	My        []Dynamic `json:"my"`
 }
 
 type UploadPIC struct {

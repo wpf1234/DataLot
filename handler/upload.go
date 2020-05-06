@@ -61,17 +61,26 @@ func (g *Gin) HeadPortrait(c *gin.Context) {
 	}
 	id := claims.Id
 	username := claims.Username
-	filePath := "static/head/" + username + "-" + fileName
-	exist, err := utils.PathExists(filePath)
+	dir := "static/head/" + username
+	//dir := "static/dynamic/test"
+	dirExit, err := utils.PathExists(dir)
 	if err != nil {
-		log.Error(err)
+		log.Error("Dir error: ", err)
 		return
 	}
-	// 存在
-	if exist {
-		return
+	if !dirExit {
+		err = os.Mkdir(dir, os.ModePerm)
+		if err != nil {
+			log.Error("创建目录失败: ", err)
+			c.JSON(http.StatusOK, gin.H{
+				"code":    http.StatusInternalServerError,
+				"data":    nil,
+				"message": "创建用户目录失败!",
+			})
+			return
+		}
 	}
-	// 不存在
+	filePath := dir + "/" + fileName
 	out, err := os.Create(filePath)
 	if err != nil {
 		log.Error("创建文件失败!")

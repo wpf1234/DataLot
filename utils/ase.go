@@ -6,7 +6,7 @@ import (
 	"crypto/cipher"
 )
 
-// 用于加密的 key 长度必须为 8, 16, 24
+// 用于加密的 key 长度必须为 16的倍数
 // 填充
 func PKCS7Padding(ciphertext []byte, blockSize int) []byte {
 	padding := blockSize - len(ciphertext)%blockSize

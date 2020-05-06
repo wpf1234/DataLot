@@ -16,8 +16,8 @@ import (
 
 func (g *Gin) Login(c *gin.Context) {
 	var id int
-	var username, interest, pwd string
-	var head interface{}
+	var username, interest, pwd, head string
+	//var head interface{}
 	var login models.Login
 	err := c.BindJSON(&login)
 	if err != nil {
@@ -61,10 +61,11 @@ func (g *Gin) Login(c *gin.Context) {
 		return
 	}
 
-	if head == nil {
-		head = ""
-	}
-
+	//if head == nil {
+	//	head = ""
+	//}
+	//var avatar string
+	//_=json.Unmarshal(head.([]uint8),&avatar)
 	sid := base.MapConf.ServiceId
 	userId := strconv.Itoa(id)
 	userSig, _ := utils.GenSig(int(base.IMC.Appid), base.IMC.Key, userId, expire)
@@ -73,7 +74,7 @@ func (g *Gin) Login(c *gin.Context) {
 		Username:  username,
 		Password:  password,
 		Mobile:    login.Phone,
-		Head:      head.(string),
+		Head:      head,
 		Meid:      login.Meid,
 		PhoneDesc: login.Desc,
 		//ServiceId: sid,
@@ -141,7 +142,7 @@ func (g *Gin) Login(c *gin.Context) {
 			Phone:     login.Phone,
 			Meid:      login.Meid,
 			PhoneDesc: login.Desc,
-			Head:      head.(string),
+			Head:      head,
 			Interest:  interests,
 			UserSig:   userSig,
 		},
@@ -168,7 +169,6 @@ func (g *Gin) Login(c *gin.Context) {
 func (g *Gin) WXLogin(c *gin.Context) {
 
 }
-
 
 // 验证码登录
 func (g *Gin) AuthCodeLogin(c *gin.Context) {
