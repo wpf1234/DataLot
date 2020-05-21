@@ -2,33 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bb9ec945-881b-4c49-882f-ece44134ae15" name="Default Changelist" comment="add-friend">
-      <change afterPath="$PROJECT_DIR$/handler/message.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/handler/points.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/handler/report.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/handler/uploadPoint.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/handler/userinfo.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/latLng.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/map.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/message.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/report.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/6a399761-d8d3-49de-8786-9f4290e4d641.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/6a399761-d8d3-49de-8786-9f4290e4d641.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/base.go" beforeDir="false" afterPath="$PROJECT_DIR$/base/base.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/conf/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/dynamic.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/dynamic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/friend.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/friend.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/home.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/home.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/login.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/login.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/reset.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/reset.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/track.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/upload.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/upload.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/appLog.20200506.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/circle.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/circle.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/conf.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/conf.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/loginres.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/loginres.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/slice2str.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/slice2str.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/report.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/report.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,22 +131,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1588754581119" />
-    <state width="1493" height="237" key="GridCell.Tab.0.bottom" timestamp="1590028804610">
+    <state width="1493" height="237" key="GridCell.Tab.0.bottom" timestamp="1590035755417">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="237" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1590028804610" />
-    <state width="1493" height="237" key="GridCell.Tab.0.center" timestamp="1590028804610">
+    <state width="1493" height="237" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1590035755417" />
+    <state width="1493" height="237" key="GridCell.Tab.0.center" timestamp="1590035755417">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="237" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1590028804610" />
-    <state width="1493" height="237" key="GridCell.Tab.0.left" timestamp="1590028804610">
+    <state width="1493" height="237" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1590035755417" />
+    <state width="1493" height="237" key="GridCell.Tab.0.left" timestamp="1590035755417">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="237" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1590028804610" />
-    <state width="1493" height="237" key="GridCell.Tab.0.right" timestamp="1590028804610">
+    <state width="1493" height="237" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1590035755417" />
+    <state width="1493" height="237" key="GridCell.Tab.0.right" timestamp="1590035755417">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="237" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1590028804610" />
+    <state width="1493" height="237" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1590035755417" />
     <state width="212" height="477" key="HiddenNamespacesPopup" timestamp="1587193852271">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

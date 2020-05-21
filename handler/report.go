@@ -24,7 +24,8 @@ func (g *Gin) Report(c *gin.Context){
 	}
 
 	reason:=utils.Slice2Str(request.Reason)
-	db:=base.DB.Exec("update dynamic set report=?,reason=?",1,reason)
+	db:=base.DB.Exec("update dynamic set report=?,reason=? where id=?",
+		1,reason,request.Id)
 	fmt.Println("[Report]Update: ",db.RowsAffected)
 
 	c.JSON(http.StatusOK,gin.H{
