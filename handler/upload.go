@@ -281,3 +281,19 @@ func (g *Gin) CyclePicture(c *gin.Context) {
 		"message": "上传图片成功!",
 	})
 }
+
+// 删除本地文件夹中的图片
+func (g *Gin) DeletePic(c *gin.Context){
+	file:=c.Query("file")
+	err:=os.Remove(file)
+	if err!=nil{
+		log.Error("删除失败: ",err)
+		return
+	}
+
+	c.JSON(http.StatusOK,gin.H{
+		"code": http.StatusOK,
+		"data": file,
+		"message": "删除成功!",
+	})
+}

@@ -2,6 +2,7 @@ package handler
 
 import (
 	"datalot/base"
+	"datalot/models"
 	"datalot/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -86,5 +87,42 @@ func (g *Gin) DelFriend(c *gin.Context)  {
 		"code":    http.StatusOK,
 		"data":    friends,
 		"message": "删除成功!",
+	})
+}
+
+func (g *Gin) FriendList(c *gin.Context)  {
+	claims, ok := c.Get("claims")
+	if !ok {
+		log.Error("Claims字段不存在!")
+		c.JSON(http.StatusOK, gin.H{
+			"code":    http.StatusInternalServerError,
+			"data":    nil,
+			"message": "没有获取到信息!",
+		})
+		return
+	}
+	userId := claims.(*utils.MyClaims).Id // user_id
+
+	var f string
+	var list []models.User
+	db:=base.DB.Raw("select friends from user where id=?",userId)
+	_=db.Row().Scan(&f)
+	str:=strings.Split(f,",")
+	for _,v:=range str{
+		var user models.User
+		var interest string
+		db=base.DB.Raw("select id,username,head,interest,phone,user_sig from user where id=?",
+			v)
+		_=db.Row().Scan(&user.Id,&user.Username,&user.Head,&interest,&user.Phone,&user.UserSig)
+		user.Head = preview + user.Head
+		user.Interest = strings.Split(interest,",")
+		list=append(list,user)
+	}
+
+
+	c.JSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"data":    list,
+		"message": "获取朋友列表成功!",
 	})
 }

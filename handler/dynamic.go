@@ -16,7 +16,8 @@ import (
 )
 
 const (
-	preview = "http://127.0.0.1:12345/v1/lot/preview?file="
+	preview = "http://305g7h9125.wicp.vip/v1/lot/preview?file="
+	topic   = "lot.micro.topic.notice"
 )
 
 // 发表动态
@@ -46,8 +47,16 @@ func (g *Gin) Release(c *gin.Context) {
 	userId := claims.(*utils.MyClaims).Id // user_id
 
 	//	将动态存入数据库
-	picture := utils.Slice2Str(content.Picture)
-
+	var picture string
+	if len(content.Picture) == 0 {
+		log.Warn("没有图片!")
+		picture = ""
+	} else {
+		for _, v := range content.Picture {
+			picture = v + ","
+		}
+		picture = strings.TrimRight(picture, ",")
+	}
 	t := time.Now().UnixNano() / 10e5
 	db := base.DB.Exec("insert into dynamic set u_id=?,content=?,picture=?,authority=?,create_at=?",
 		userId, content.Text, picture, content.Auth, t)
@@ -87,6 +96,10 @@ func (g *Gin) ViewList(c *gin.Context) {
 	//myName := claims.(*utils.MyClaims).Username
 	//myHead := claims.(*utils.MyClaims).Head
 
+	page, _ := strconv.Atoi(c.Query("page"))
+	size, _ := strconv.Atoi(c.Query("size"))
+	tm, _ := strconv.ParseInt(c.Query("tm"), 10, 64)
+
 	//	第一步，查询所有符合条件的动态
 	// 好友动态
 	var friend string
@@ -98,11 +111,12 @@ func (g *Gin) ViewList(c *gin.Context) {
 	} else {
 		friend = friend + "," + strconv.Itoa(userId)
 		sql := fmt.Sprintf(`select * from 
-(select id,u_id,content,picture,create_at,f_num from dynamic where u_id in (%s)) as a 
+(select id,u_id,content,picture,create_at,f_num from dynamic where u_id in (%s) and report=%d) as a 
 left join 
 (select id,username,head from user) as b 
 on a.u_id=b.id 
-order by a.create_at desc`, friend)
+order by a.create_at desc 
+limit %d,%d`, friend, 0,(page-1)*size, size)
 
 		db = base.DB.Raw(sql)
 		rows, err := db.Rows()
@@ -112,10 +126,10 @@ order by a.create_at desc`, friend)
 		}
 		for rows.Next() {
 			var l models.Dynamic
-			var uId, uuId, like int
+			var uId, like int
 			var p string
 			_ = rows.Scan(&l.Id, &uId, &l.Content, &p, &l.Tm, &l.Favorite,
-				&uuId, &l.Username, &l.Head)
+				&l.UserId, &l.Username, &l.Head)
 			l.Head = preview + l.Head
 			l.Picture = strings.Split(p, ",")
 			db = base.DB.Raw("select count(1) from comment where d_id=?", l.Id)
@@ -130,29 +144,24 @@ order by a.create_at desc`, friend)
 			}
 			comm, _ := comment(l.Id)
 			l.CommList = comm
-			l.Show = false
+
 			fCircle = append(fCircle, l)
 		}
 		_ = rows.Close()
 		circle.Friend = fCircle
-		//distinct:=utils.SliceRemoveDuplicate(circle.Friend)
-		//utils.SortBody(distinct, func(p, q *interface{}) bool {
-		//	v := reflect.ValueOf(*p)
-		//	i := v.FieldByName("Tm")
-		//	v = reflect.ValueOf(*q)
-		//	j := v.FieldByName("Tm")
-		//	return i.String() < j.String()
-		//})
 	}
 
-	// 公开的
+	// 推荐
 	var rec []models.Dynamic
+	// 查询推荐人的信息及动态
 	sql := fmt.Sprintf(`select * from 
-(select id,u_id,content,picture,create_at,f_num,authority from dynamic where authority in (0,1)) as a 
+(select r_id,exponent from recommend where u_id=%d) as a 
 left join 
-(select id,username,head from user) as b 
-on a.u_id=b.id 
-order by a.create_at desc`)
+(select id,u_id,content,picture,create_at,f_num,authority from dynamic 
+where authority in (0,1) and report=0) as b 
+on a.r_id=b.u_id 
+order by a.exponent desc,b.create_at desc 
+limit %d,%d`, userId, (page-1)*size, size)
 	db = base.DB.Raw(sql)
 	rows, err := db.Rows()
 	if err != nil {
@@ -162,10 +171,11 @@ order by a.create_at desc`)
 
 	for rows.Next() {
 		var l models.Dynamic
-		var uId, uuId, auth, like int
+		var uId, exp, auth, like int
 		var p string
-		_ = rows.Scan(&l.Id, &uId, &l.Content, &p, &l.Tm, &l.Favorite, &auth,
-			&uuId, &l.Username, &l.Head)
+		_ = rows.Scan(&uId, &exp, &l.Id, &l.UserId, &l.Content, &p, &l.Tm, &l.Favorite, &auth)
+		db = base.DB.Raw("select username,head from user where id=?", l.UserId)
+		_ = db.Row().Scan(&l.Username, &l.Head)
 		l.Head = preview + l.Head
 		l.Picture = strings.Split(p, ",")
 		if auth == 1 {
@@ -174,8 +184,7 @@ order by a.create_at desc`)
 				log.Error("ASE error: ", err)
 				return
 			}
-			l.Username = base64.StdEncoding.EncodeToString(b)
-			//fmt.Println("username: ",l.Username)
+			l.Username = base64.StdEncoding.EncodeToString(b[:6])
 		}
 
 		db = base.DB.Raw("select count(1) from comment where d_id=?", l.Id)
@@ -190,24 +199,86 @@ order by a.create_at desc`)
 		}
 		comm, _ := comment(l.Id)
 		l.CommList = comm
-		l.Show = false
+
 		rec = append(rec, l)
 	}
 	_ = rows.Close()
 
 	circle.Recommend = rec
-	//utils.SortBody(distinct, func(p, q *interface{}) bool {
-	//	v := reflect.ValueOf(*p)
-	//	i := v.FieldByName("Tm")
-	//	v = reflect.ValueOf(*q)
-	//	j := v.FieldByName("Tm")
-	//	return i.String() < j.String()
-	//})
+
+	// 最新动态
+	var news []models.Dynamic
+	sql = fmt.Sprintf(`select * from 
+(select id,u_id,content,picture,create_at,f_num from dynamic 
+where authority in (0,1) and create_at >= %d and report=0) as a 
+left join 
+(select id,username,head from user) as b 
+on a.u_id=b.id 
+order by a.create_at desc 
+limit %d,%d`, tm, (page-1)*size, size)
+
+	db = base.DB.Raw(sql)
+	rows, err = db.Rows()
+	if err != nil {
+		log.Error("查询最新动态失败: ", err)
+		return
+	}
+	for rows.Next() {
+		var l models.Dynamic
+		var uId, like int
+		var p string
+		_ = rows.Scan(&l.Id, &uId, &l.Content, &p, &l.Tm, &l.Favorite,
+			&l.UserId, &l.Username, &l.Head)
+		l.Head = preview + l.Head
+		l.Picture = strings.Split(p, ",")
+		db = base.DB.Raw("select count(1) from comment where d_id=?", l.Id)
+		_ = db.Row().Scan(&l.Comment)
+		db = base.DB.Raw("select is_like from favorite where u_id=? and d_id=?",
+			userId, l.Id)
+		_ = db.Row().Scan(&like)
+		if like == 1 {
+			l.Like = true
+		} else {
+			l.Like = false
+		}
+		comm, _ := comment(l.Id)
+		l.CommList = comm
+
+		news = append(news, l)
+	}
+	_ = rows.Close()
+
+	circle.News = news
 
 	c.JSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"data":    circle,
 		"message": "获取动态成功!",
+	})
+}
+
+// 查询消息数量
+func (g *Gin) GetMsgNum(c *gin.Context){
+	claims, ok := c.Get("claims")
+	if !ok {
+		log.Error("Claims字段不存在!")
+		c.JSON(http.StatusOK, gin.H{
+			"code":    http.StatusInternalServerError,
+			"data":    nil,
+			"message": "没有获取到信息!",
+		})
+		return
+	}
+	userId := claims.(*utils.MyClaims).Id // user_id
+
+	var total int
+	db:=base.DB.Raw("select count(1) from record where u_id=? and is_read=?", userId, 0)
+	_=db.Row().Scan(&total)
+
+	c.JSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"data":    total,
+		"message": "获取消息数量成功!",
 	})
 }
 
@@ -287,13 +358,13 @@ func (g *Gin) Comment(c *gin.Context) {
 
 		return
 	}
-	comm.UserId = userId
+	comm.CommId = userId
 	//comm.Head=myHead
-	head := "http://127.0.0.1:12345/v1/lot/preview?file=" + myHead
+	head := preview + myHead
 	// 将数据存入数据库
 	tm := time.Now().UnixNano() / 10e5
 	db := base.DB.Exec("insert into comment set d_id=?,u_id=?,username=?,head=?,comment=?,comm_tm=?",
-		comm.DynamicId, comm.UserId, username, head, comm.Context, tm)
+		comm.DynamicId, comm.CommId, username, head, comm.Context, tm)
 	err = db.Error
 	if err != nil {
 		log.Error("插入失败: ", err)
@@ -306,6 +377,11 @@ func (g *Gin) Comment(c *gin.Context) {
 		"data":    comm,
 		"message": "评论成功!",
 	})
+
+	// 评论记录
+	db=base.DB.Exec("insert into record set u_id=?,d_id=?,operator=?,operate=?,tm=?",
+		comm.UserId,comm.DynamicId,userId,"评论",tm)
+	fmt.Println("Insert into: ",db.RowsAffected)
 }
 
 // 答复某条评论
@@ -432,15 +508,35 @@ func (g *Gin) Tags(c *gin.Context) {
 		return
 	}
 	userId := claims.(*utils.MyClaims).Id // user_id
+	//myName := claims.(*utils.MyClaims).Username
+	//myHead := claims.(*utils.MyClaims).Head
 
-	var count int
-	db := base.DB.Raw("select f_num from dynamic where id=?", id)
-	_ = db.Row().Scan(&count)
+	var uId, count int
+	var p string
+	var d models.Dynamic
+	db := base.DB.Raw("select id,u_id,content,picture,create_at,f_num from dynamic where id=?", id)
+	_ = db.Row().Scan(&d.Id, &uId, &d.Content, &p, &d.Tm, &count)
 
 	if like == 1 {
+		var fId int
 		count = count + 1
-		db = base.DB.Exec("update favorite set is_like=? where u_id=? and d_id=?",
-			1, userId, id)
+		db = base.DB.Raw("select id from favorite where u_id=? and d_id=?",
+			userId, id)
+		_ = db.Row().Scan(&fId)
+		if fId == 0 {
+			db = base.DB.Exec("insert into favorite set is_like=?,u_id=?,d_id=?",
+				1, userId, id)
+		} else {
+			db = base.DB.Exec("update favorite set is_like=? where u_id=? and d_id=?",
+				1, userId, id)
+		}
+
+		// 点赞记录
+		tm:=time.Now().UnixNano() / 10e5
+		db=base.DB.Exec("insert into record set u_id=?,d_id=?,operator=?,operate=?,tm=?",
+			uId,d.Id,userId,"点赞",tm)
+		fmt.Println("Insert into: ",db.RowsAffected)
+
 	} else {
 		count = count - 1
 		db = base.DB.Exec("update favorite set is_like=? where u_id=? and d_id=?",
@@ -457,6 +553,7 @@ func (g *Gin) Tags(c *gin.Context) {
 	})
 }
 
+// 获取我的动态
 func (g *Gin) GetMyDynamic(c *gin.Context) {
 	claims, ok := c.Get("claims")
 	if !ok {
@@ -474,7 +571,8 @@ func (g *Gin) GetMyDynamic(c *gin.Context) {
 
 	// 自己的动态
 	var my []models.MyDynamic
-	db := base.DB.Raw(`select id,content,picture,create_at,f_num from dynamic where u_id=? 
+	db := base.DB.Raw(`select id,content,picture,create_at,f_num from dynamic 
+where u_id=? and report=0 
 order by create_at desc`, userId)
 	rows, err := db.Rows()
 	if err != nil {
@@ -493,7 +591,7 @@ order by create_at desc`, userId)
 		_ = rows.Scan(&l.Id, &l.Content, &p, &l.Tm, &l.Favorite)
 		l.Picture = strings.Split(p, ",")
 		db = base.DB.Raw("select count(1) from comment where d_id=?", l.Id)
-		db.Row().Scan(&l.Comment)
+		_ = db.Row().Scan(&l.Comment)
 		comm, _ := comment(l.Id)
 		l.CommList = comm
 		l.Username = username
@@ -502,13 +600,6 @@ order by create_at desc`, userId)
 	}
 	_ = rows.Close()
 
-	for k, _ := range my {
-		if k == 0 {
-			my[k].Flex = 12
-		} else {
-			my[k].Flex = 6
-		}
-	}
 	c.JSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"data":    my,

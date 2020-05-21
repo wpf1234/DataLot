@@ -9,6 +9,7 @@ import (
 	"net/http"
 )
 
+// 修改密码
 func (g *Gin) ResetPwd(c *gin.Context) {
 	var reset models.Reset
 	err := c.BindJSON(&reset)

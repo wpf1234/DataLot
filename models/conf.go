@@ -23,13 +23,19 @@ type LogConf struct {
 //}
 
 // 百度地图配置
-type MapConf struct {
-	ServiceId  int64  `json:"service_id"`
-	Key        string `json:"key"`
-	EntityUrl  string `json:"entity_url"`
-	EntityList string `json:"entity_list"`
-	AddPoint   string `json:"add_point"`
-	TrackUrl   string `json:"track_url"`
+//type MapConf struct {
+//	ServiceId  int64  `json:"service_id"`
+//	Key        string `json:"key"`
+//	EntityUrl  string `json:"entity_url"`
+//	EntityList string `json:"entity_list"`
+//	AddPoint   string `json:"add_point"`
+//	TrackUrl   string `json:"track_url"`
+//}
+
+// MapBox配置
+type MapBox struct {
+	Url string `json:"url"`
+	Sk  string `json:"sk"`
 }
 
 // 腾讯 IM 即时通讯

@@ -10,7 +10,7 @@ func Slice2Str(s interface{}) string {
 	var str string
 	if ps, ok := s.(*[]string); ok {
 		for _, v := range *ps {
-			str = str + v + ","
+			str =str + v + ","
 		}
 	} else if ps, ok := s.(*[]int); ok {
 		for _, v := range *ps {

@@ -24,8 +24,9 @@ var (
 
 	mc      models.MysqlConf
 	lc      models.LogConf
-	MapConf models.MapConf
+	//MapConf models.MapConf
 	IMC models.IMConf
+	MapBox models.MapBox
 
 	DB *gorm.DB
 )
@@ -84,7 +85,7 @@ func Init() {
 	}
 	log.Info("数据库连接成功!")
 
-	if err := config.Get(defaultPath, "map").Scan(&MapConf); err != nil {
+	if err := config.Get(defaultPath, "map").Scan(&MapBox); err != nil {
 		log.Error("地图资源配置文件读取失败: ", err)
 		return
 	}

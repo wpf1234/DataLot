@@ -15,12 +15,17 @@ app:
 #    track_utl: https://tsapi.amap.com/v1/track/trace/add
 #    search_url: https://tsapi.amap.com/v1/track/terminal/trsearch
   # map:
-     key: CHLQNMGv6QLfiBqF6dkS43lVGaF5SL2I   # 百度地图
-     service_id: 220524
-     entity_url: http://yingyan.baidu.com/api/v3/entity/add     # POST
-     entity_list: http://yingyan.baidu.com/api/v3/entity/list   # GET
-     add_point: http://yingyan.baidu.com/api/v3/track/addpoints #POST请求
-     track_url: http://yingyan.baidu.com/api/v3/track/gettrack  # GET
+#     key: CHLQNMGv6QLfiBqF6dkS43lVGaF5SL2I   # 百度地图
+#     service_id: 220524
+#     entity_url: http://yingyan.baidu.com/api/v3/entity/add     # POST
+#     entity_list: http://yingyan.baidu.com/api/v3/entity/list   # GET
+#     add_point: http://yingyan.baidu.com/api/v3/track/addpoints #POST请求
+#     track_url: http://yingyan.baidu.com/api/v3/track/gettrack  # GET
+  # mapbox
+#    url: https://api.mapbox.com/tokens/v2/laofee?access_token=
+#    sk: sk.eyJ1IjoibGFvZmVlIiwiYSI6ImNrOXdqZzRjcTA5bnkzbHFzcXdkM3RxNDYifQ.n20SuejXkGNWl0NQuvSXEg
+    url: https://api.mapbox.com/tokens/v2/gjustwalker?access_token=
+    sk: sk.eyJ1IjoiZ2p1c3R3YWxrZXIiLCJhIjoiY2thN3M4OHBiMDYwejJ6bXRvYXI0YzVmdCJ9.g9Uwq3amftzzQMG0gBUdTA
   tencent:
     appid: 1400355024  #1400356717 #1400355024
     #1d272644ec956a6dcb4456dba396c1d15b6dd899886c86680cb537298da1dbb5
